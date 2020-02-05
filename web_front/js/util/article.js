@@ -21,6 +21,12 @@ var article = {
      */
     getRank:function(type){
         return $.get(APILIST.article_rank,{'type':type})
+    },
+    /**
+     * 获取最新的文章
+     */
+    getLastest:function(){
+        return $.get(APILIST.article_last)
     }
     
 }

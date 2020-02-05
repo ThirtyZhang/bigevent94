@@ -18,4 +18,7 @@ var APILIST = {
 
     // 获取热门文章排行
     article_rank:BASEURL + '/rank',
+
+    // 最新文章
+    article_last:BASEURL + '/lastest'
 }
