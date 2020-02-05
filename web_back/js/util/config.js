@@ -3,9 +3,9 @@
 
 // 所有接口的基地址
 // 就是运行小黑窗服务器的地址.如果当前的服务器就是在自已电脑上，就可以直接写成localhost
-// var BASEURL = 'http://localhost:8000'
+var BASEURL = 'http://localhost:8000'
 // var BASEURL = 'http://192.168.0.108:8000'
-var BASEURL = 'http://39.99.130.177:8000'
+// var BASEURL = 'http://39.99.130.177:8000'
 
 // 用来保存所有的接口信息
 var APILIST = {
@@ -28,5 +28,7 @@ var APILIST = {
     // 删除文章
     article_del: BASEURL + '/admin/article_delete',
     // 添加文章
-    article_add: BASEURL + '/admin/article_publish'
+    article_add: BASEURL + '/admin/article_publish',
+    // 保存文章的修改
+    article_edit: BASEURL + '/admin/article_edit'
 }
