@@ -14,6 +14,6 @@ var APILIST = {
     category_get:  BASEURL + '/category',
   
     // 获取文章
-    article_get: BASEURL + '/admin/search',
+    article_get: BASEURL + '/search',
    
 }

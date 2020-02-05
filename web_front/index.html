@@ -49,7 +49,7 @@
 
     <div class="main_con clearfix">
         <div class="left_con">
-            <ul class="focus_list">
+            <ul class="focus_list" id="focus_list">
                 <li class="first">
                     <a href="#"><img src="images/pic01.jpg" alt=""></a>
                     <p>图片说明</p>
@@ -220,10 +220,27 @@
     <script src="./js/template-web.js"></script>
     <script src="./js/util/config.js"></script>
     <script src="./js/util/category.js"></script>
+    <script src="./js/util/article.js"></script>
 
+    <!-- 文章类型 -->
     <script id="cate" type="text/html">
         {{each data item}}
             <li><a href="./list.html">{{item.name}}</a></li>
+        {{/each}}
+    </script>
+    <!-- 焦点图 
+    注意：只有第一个li才有first的类，其它是没有的
+    -->
+    <script id="focus" type="text/html">
+        {{each data item idx}}
+            {{if idx == 0}}
+                <li class="first">
+            {{else}}
+                <li>
+            {{/if}}
+                    <a href="#"><img src="{{item.cover}}" alt=""></a>
+                    <p>{{item.title}}</p>
+                </li>
         {{/each}}
     </script>
     <script>
@@ -232,7 +249,7 @@
             console.log(res);
             // 渲染结构
             var htmlStr = template('cate', res)
-            console.log(htmlStr);
+            // console.log(htmlStr);
             // 显示
             // 替换整个容器中的html
             $('#left_menu').html(htmlStr); 
@@ -240,6 +257,23 @@
             // 追加一些内容
             $('#level_two_menu').append(htmlStr ) 
         })
+
+        // 2. 显示焦点图
+        //  调用接口，获取数据，template渲染
+        article.getFouceFive().then(function(res){
+            console.log(res);
+            if(res.code === 200){
+                // 渲染
+                var htmlStr = template("focus", res)
+                console.log(htmlStr);
+                $('#focus_list').html(htmlStr )
+                
+            } else{
+                alert(res.msg)
+            }
+            
+        })
+
     </script>
 </body>
 
