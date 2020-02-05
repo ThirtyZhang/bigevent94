@@ -244,6 +244,7 @@
         // 2. 显示菜单导航菜单，并把当前的文章类别高亮显示 
         // 获取文章的类型并显示
         category.get().then(function(res){
+            // 补充一个属性来保存当前的类别编号，以方便在模板内部来获取这个编号
             res.curId = id
             console.log(res);
             // 渲染结构
