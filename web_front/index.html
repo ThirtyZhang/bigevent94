@@ -221,6 +221,18 @@
         <p>电话：0755-****888    粤ICP备*******8号</p>
     </div>
 
+
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/util/config.js"></script>
+    <script src="./js/util/category.js"></script>
+
+    <script>
+        // 1. 获取文章的类型并显示
+        category.get().then(function(res){
+            console.log(res);
+            
+        })
+    </script>
 </body>
 
 </html>
