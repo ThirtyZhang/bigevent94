@@ -89,9 +89,6 @@
                     </div>
                 </div>
             </div>
-
-            
-
         </div>
         <div class="right_con">
             <div class="common_wrap">
@@ -180,7 +177,7 @@
     <!-- 文章类型 -->
     <script id="cate" type="text/html">
         {{each data item}}
-            <li><a href="./list.html">{{item.name}}</a></li>
+            <li><a href="./list.html?id={{item.id}}">{{item.name}}</a></li>
         {{/each}}
     </script>
     <!-- 焦点图 
@@ -283,12 +280,10 @@
                 var htmlStr = template('tmpNews',res)
                 console.log(htmlStr);
                 $('#news_list').html(htmlStr )
-                
             } else {
                 alert(res.msg)
             }
         })
-
     </script>
 </body>
 
