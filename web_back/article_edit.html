@@ -38,11 +38,7 @@
                     <label for="inputEmail3" class="col-sm-2 control-label">文章类别：</label>
                     <div class="col-sm-4">
                         <select class="form-control" id="type">
-                            <option>类别一</option>
-                            <option>类别二</option>
-                            <option>类别三</option>
-                            <option selected>类别四</option>
-                            <option>类别五</option>
+                           
                         </select>
                     </div>
                 </div>
@@ -76,16 +72,26 @@
     </div>
 
     <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="js/template-web.js"></script>
     <script src="js/jedate/js/jedate.js"></script>
     <script src="js/tinymce/js/tinymce/tinymce.min.js"></script>
     <script src="js/tinymce/js/tinymce_setup.js"></script>
 
     <script src="./js/util/config.js"></script>
     <script src="./js/util/article.js"></script>
+    <script src="./js/util/category.js"></script>
+
+    <!-- 文章分类信息的模板 -->
+    <script id="cate" type="text/html">
+        {{each data item}}
+        <option value="{{item.id}}">{{item.name}}</option>
+        {{/each}}
+   
     </script>
 
     <script>
         // 实现文章编辑
+        //  （1） 先发ajax求类别 （2）完成之后，再发ajax求详情
         // 1. 获取当前要编辑的文章id
         // window.location:是一个bom对象，保存浏览器当前页面的url信息，它是一个对象
         //      http://127.0.0.1:5500/web_back/article_edit.html?id=1580870111528
@@ -97,29 +103,56 @@
 
         // 2. 根据id去取回这篇文章的信息，并显示在页面上
         var id = window.location.search.substr(4)
-        // 接下来要调用接口去取信息
-        article.getById(id).then(function(res){
-            console.log(res);
-            if(res.code === 200){
-                // 把结果显示在页面上：把数据填入到表单中
-                $('#title').val( res.data.title )
-                $('#previewImg').attr('src', res.data.cover )
-                $('#dateinput').val(res.data.date)
-                
-                // 给富文件编辑器，设置内容
-                setTimeout (function(){
-                    // tinymce.activeEditor.setContent能生效的前提是
-                    // 富文本编辑器已经就绪了。如果说ajax数据回来了，但是富文本编辑器还没有绪
-                    // 它就可以会报错，所以给它加一点延迟。
-                    tinymce.activeEditor.setContent( res.data.content )
-                },1000)
+        
 
-            } else {
-                alert(res.msg)
-            }
-            
-        })
+        getAndShowCategory()
         // 3. 实现保存编辑
+        // 接下来要调用接口去取信息
+        function getAndShow(id) {
+            article.getById(id).then(function(res){
+                console.log(res);
+                if(res.code === 200){
+                    // 把结果显示在页面上：把数据填入到表单中
+                    $('#title').val( res.data.title )
+                    $('#previewImg').attr('src', res.data.cover )
+                    $('#dateinput').val(res.data.date)
+
+                    $('#type').val(res.data.type)
+                    
+                    // 给富文件编辑器，设置内容
+                    setTimeout (function(){
+                        // tinymce.activeEditor.setContent能生效的前提是
+                        // 富文本编辑器已经就绪了。如果说ajax数据回来了，但是富文本编辑器还没有绪
+                        // 它就可以会报错，所以给它加一点延迟。
+                        tinymce.activeEditor.setContent( res.data.content )
+                    },1000)
+                } else {
+                    alert(res.msg)
+                } 
+            })
+        }
+        
+        function getAndShowCategory(){
+            category.get().then(function(res){
+                console.log(res);
+                if(res.code ===200){
+                    var htmlStr = template('cate',res)
+                    console.log(htmlStr);
+                    // 写入select
+                    $('#type').html( htmlStr )
+                    // 让一个下拉框选中指定的文章的类型
+                    // $('#type').val(1580867650235)
+
+                    // 类别获取完成之后，再去获取并显示文章详情
+                    getAndShow(id)
+                }else{
+                    alert(res.msg)
+                }
+                
+            })
+        }
+
+        
     </script>
 </body>
 </html>
