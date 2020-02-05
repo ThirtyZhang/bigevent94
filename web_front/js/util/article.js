@@ -15,5 +15,12 @@ var article = {
     getById:function(id){
         return $.get(APILIST.article_get,{'id':id})
     },
+    /**
+     * 获取文章排行
+     * @param {*} type 
+     */
+    getRank:function(type){
+        return $.get(APILIST.article_rank,{'type':type})
+    }
     
 }

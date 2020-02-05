@@ -15,5 +15,7 @@ var APILIST = {
   
     // 获取文章
     article_get: BASEURL + '/search',
-   
+
+    // 获取热门文章排行
+    article_rank:BASEURL + '/rank',
 }
