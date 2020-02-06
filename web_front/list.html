@@ -46,7 +46,7 @@
         <div class="left_con setfr">
 
             <div class="list_title">
-                <h3>科 技</h3>
+                <h3 id="cateName">科 技</h3>
             </div>
 
             <div id="list">
@@ -204,7 +204,7 @@
         category.get().then(function(res){
             // 补充一个属性来保存当前的类别编号，以方便在模板内部来获取这个编号
             res.curId = id
-            console.log(res);
+     
             // 渲染结构
             var htmlStr = template('cate', res)
             // console.log(htmlStr);
@@ -214,6 +214,16 @@
 
             // 追加一些内容
             $('#level_two_menu').append(htmlStr ) 
+
+            // res.data是一个数组，每一个元素就是一对象
+            // 取出对象的id属性与当前地址栏中id进行比较，找到要显示在页面上的栏目的 文字
+            res.data.forEach(function(item){
+                console.log(item)
+                if(item.id == id) {
+                    $('#cateName').html( item.name)
+                    // alert( item.name )
+                }
+            })
         })
         
         // 3. 显示文章列表
