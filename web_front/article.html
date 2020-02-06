@@ -185,11 +185,17 @@
     <script src="./js/util/article.js"></script>
     <script src="./js/util/comment.js"></script>
 
+    <!-- 引入日期时间的js库 dayjs -->
+    <script src="./js/dayjs/dayjs.min.js"></script>
+    <script src="./js/dayjs/zh_cn.js"></script>
+    <script src="./js/dayjs/relative.min.js"></script>
+
+
     <script id="tmp" type="text/html">
         {{each data item}}
         <div class="comment_detail_list">
             <div class="person_pic fl">{{item.name.substr(0,1)}}</div>
-            <div class="name_time fl"><b>{{item.name}}</b><span>{{item.dt}}</span></div>
+            <div class="name_time fl"><b>{{item.name}}</b><span>{{item.relativeTime}}</span></div>
             <div class="comment_text fl">
                 {{item.content}}
             </div>
@@ -199,6 +205,12 @@
     </script>
     
     <script>
+
+        dayjs.locale('zh-cn') ; // 全局设置，中文
+        // 使用插件
+        dayjs.extend(dayjs_plugin_relativeTime);
+
+
         // 1. 获取从地址栏中传入的文章编号
         // http://127.0.0.1:5500/web_front/article.html?id=1576408259770
         // location.search  : ?id=1576408259770
@@ -270,13 +282,24 @@
         function getComment(){
             comment.get(id).then(function(res){
                 if(res.code ==200){
+                    // 对每一条留言中的dt进行格式化
+                    // 具体就是从 时间戳 转成相对时间
+                    res.data.forEach(function(item){
+                        // item.relativeTime = item.dt --->相对时间
+                        // item.relativeTime = getRelativeTime(item.dt)
+                        item.relativeTime =  dayjs(item.dt).fromNow()
+                        
+                    })
+                    console.log(res.data);
                     var htmlStr = template('tmp', res)
-                    // console.log(htmlStr);
                     $('#comment_list').html( htmlStr )
-
                 }
-                
             })
+        }
+
+        // 创建一个函数，专门用来把时间戳转成相对时间 
+        function getRelativeTime(dt){
+            return dayjs(dt).fromNow();
         }
     </script>
 
