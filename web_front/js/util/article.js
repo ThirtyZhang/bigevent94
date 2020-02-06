@@ -17,7 +17,8 @@ var article = {
     },
     /**
      * 获取文章排行
-     * @param {*} type 
+     * @param {*} type  文章类别编号 
+     * 如果不传则在全部的类别中进行排行。
      */
     getRank:function(type){
         return $.get(APILIST.article_rank,{'type':type})
