@@ -141,8 +141,7 @@
     <script src="./js/util/config.js"></script>
     <script src="./js/util/category.js"></script>
     <script src="./js/util/article.js"></script>
-
-
+    <script src="./js/lazyload.js"></script>
     <!-- 
         文章类型
         把当前的列表中对应的文章编号高亮显示
@@ -164,7 +163,8 @@
     <script id="tmpNews" type="text/html">
         {{each data item}}
             <div class="common_news_list">
-                <a href="./article.html?id={{item.id}}" class="list_pic"><img src="{{item.cover}}" alt=""></a>
+                <a href="./article.html?id={{item.id}}" class="list_pic">
+                    <img class="img" data-src="{{item.cover}}" src="./images/loading.png" alt=""></a>
                 <h4><a href="./article.html?id={{item.id}}">{{item.title}}</a></h4>
                 <p>{{item.content}}</p>
                 <div class="new_info">
@@ -192,7 +192,6 @@
             {{/if}}
         {{/each}}
     </script>
-
     <script>
         // 1. 从地址栏中获取出id
         // window.localtion  http://127.0.0.1:5500/web_front/list.html?id=1
@@ -256,6 +255,10 @@
                 // 数据渲染
                 console.log(htmlStr);
                 $('#list').html( htmlStr)
+
+                // lazyload(); // 启动懒加载
+                $('.img').lazyload()
+
                 // 如果只有一页，则不需要显示分页条
                 if(res.pages <= 1){
                     return 
