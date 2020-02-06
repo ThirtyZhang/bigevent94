@@ -12,5 +12,13 @@ var comment = {
             'content': content,
             'article_id':article_id
         })
+    },
+
+    /**
+     * 获取文章的评论
+     * @param {*} id  文章编号
+     */
+    get:function(id) {
+        return $.get(APILIST.comment_get, { 'article_id': id})
     }
 }
