@@ -36,5 +36,12 @@ var article = {
      */
     getList:function(type,page) {
         return $.get(APILIST.article_get,{'type':type,'page':page})
+    },
+    /**
+     * 获取文章详情
+     * @param {*} id 文章编号
+     */
+    getDetail:function(id){
+        return $.get(APILIST.article_detail,{'id':id})
     }
 }
