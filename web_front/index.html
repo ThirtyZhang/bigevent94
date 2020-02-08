@@ -243,14 +243,15 @@
         //  调用接口，获取数据，template渲染
         article.getFouceFive().then(function(res){
             console.log(res);
-            if(res.code === 200){
+            let {code,msg} = res
+            if(code === 200){
                 // 渲染
                 var htmlStr = template("focus", res)
                 // console.log(htmlStr);
                 $('#focus_list').html(htmlStr )
                 
             } else{
-                alert(res.msg)
+                alert(msg)
             } 
         })
 

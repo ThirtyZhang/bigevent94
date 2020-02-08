@@ -8,7 +8,7 @@ var BASEURL = 'http://localhost:8000'
 // var BASEURL = 'http://39.99.130.177:8000'
 
 // 用来保存所有的接口信息
-var APILIST = {
+const APILIST = {
     
     // 获取文章分类
     category_get:  BASEURL + '/category',
